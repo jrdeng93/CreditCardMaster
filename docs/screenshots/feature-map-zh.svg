@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <rect width="1280" height="760" fill="#f6f8fa"/>
+  <text x="70" y="78" font-family="Arial, 'PingFang SC', sans-serif" font-size="40" font-weight="800" fill="#0b1f44">所有信息，最后只服务一个付款决策</text>
+  <text x="70" y="116" font-family="Arial, 'PingFang SC', sans-serif" font-size="20" fill="#57606a">Offers、权益、积分、返现、社区热门讨论，都进入同一个推荐引擎。</text>
+
+  <rect x="438" y="278" width="404" height="168" rx="28" fill="#0b1f44"/>
+  <text x="520" y="342" font-family="Arial, 'PingFang SC', sans-serif" font-size="30" font-weight="800" fill="#ffffff">决策引擎</text>
+  <text x="492" y="382" font-family="Arial, 'PingFang SC', sans-serif" font-size="18" fill="#c9d1d9">同时搜索 active offers + 卡片权益</text>
+  <text x="528" y="414" font-family="Arial, 'PingFang SC', sans-serif" font-size="18" fill="#c9d1d9">付款前告诉你用哪张卡</text>
+
+  <g font-family="Arial, 'PingFang SC', sans-serif">
+    <rect x="70" y="178" width="292" height="132" rx="22" fill="#ddf4ff" stroke="#54aeef" stroke-width="2"/>
+    <text x="102" y="228" font-size="24" font-weight="800" fill="#0b1f44">Offer 导入</text>
+    <text x="102" y="262" font-size="17" fill="#57606a">添加用户提供的 offers</text>
+    <text x="102" y="288" font-size="17" fill="#57606a">过期前一直可搜索</text>
+
+    <rect x="70" y="358" width="292" height="132" rx="22" fill="#dafbe1" stroke="#2da44e" stroke-width="2"/>
+    <text x="102" y="408" font-size="24" font-weight="800" fill="#0b1f44">手动 Offers</text>
+    <text x="102" y="442" font-size="17" fill="#57606a">邮件、app、账户消息</text>
+    <text x="102" y="468" font-size="17" fill="#57606a">复制粘贴也能补进去</text>
+
+    <rect x="70" y="538" width="292" height="132" rx="22" fill="#fff8c5" stroke="#d4a72c" stroke-width="2"/>
+    <text x="102" y="588" font-size="24" font-weight="800" fill="#0b1f44">信用卡新闻</text>
+    <text x="102" y="622" font-size="17" fill="#57606a">每天早上看热门讨论</text>
+    <text x="102" y="648" font-size="17" fill="#57606a">自动推送 Discord 简报</text>
+
+    <rect x="918" y="178" width="292" height="132" rx="22" fill="#fbefff" stroke="#bf87ff" stroke-width="2"/>
+    <text x="950" y="228" font-size="24" font-weight="800" fill="#0b1f44">信用卡权益</text>
+    <text x="950" y="262" font-size="17" fill="#57606a">Credits 和 bonus 类别</text>
+    <text x="950" y="288" font-size="17" fill="#57606a">理解商户和消费场景</text>
+
+    <rect x="918" y="358" width="292" height="132" rx="22" fill="#ffebe9" stroke="#ff8182" stroke-width="2"/>
+    <text x="950" y="408" font-size="24" font-weight="800" fill="#0b1f44">钱包策略</text>
+    <text x="950" y="442" font-size="17" fill="#57606a">积分 vs 返现</text>
+    <text x="950" y="468" font-size="17" fill="#57606a">只为权益持有的卡</text>
+
+    <rect x="918" y="538" width="292" height="132" rx="22" fill="#eaeef2" stroke="#8c959f" stroke-width="2"/>
+    <text x="950" y="588" font-size="24" font-weight="800" fill="#0b1f44">本地隐私</text>
+    <text x="950" y="622" font-size="17" fill="#57606a">SQLite 存在自己机器</text>
+    <text x="950" y="648" font-size="17" fill="#57606a">不保存密码和 MFA</text>
+  </g>
+
+  <g stroke="#8c959f" stroke-width="4" stroke-linecap="round">
+    <line x1="362" y1="244" x2="438" y2="324"/>
+    <line x1="362" y1="424" x2="438" y2="370"/>
+    <line x1="362" y1="604" x2="438" y2="416"/>
+    <line x1="842" y1="324" x2="918" y2="244"/>
+    <line x1="842" y1="370" x2="918" y2="424"/>
+    <line x1="842" y1="416" x2="918" y2="604"/>
+  </g>
+
+  <rect x="438" y="540" width="404" height="78" rx="20" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="476" y="589" font-family="Menlo, Consolas, monospace" font-size="20" fill="#0b1f44">/offers query:今晚吃饭</text>
+</svg>

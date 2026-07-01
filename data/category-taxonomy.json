@@ -1,0 +1,104 @@
+{
+  "categories": [
+    {
+      "id": "dining",
+      "label": "Dining",
+      "aliases": ["restaurant", "restaurants", "dining", "meal", "takeout", "delivery", "coffee", "餐厅", "吃饭", "饭店", "外卖", "咖啡"]
+    },
+    {
+      "id": "grocery",
+      "label": "Grocery",
+      "aliases": ["grocery", "groceries", "supermarket", "market", "买菜", "超市"]
+    },
+    {
+      "id": "gas",
+      "label": "Gas",
+      "aliases": ["gas", "fuel", "gas station", "gas stations", "charging", "ev charging", "加油", "加油站"]
+    },
+    {
+      "id": "travel",
+      "label": "Travel",
+      "aliases": ["travel", "trip", "airbnb", "cruise", "parking", "train", "旅行", "旅游"]
+    },
+    {
+      "id": "hotel",
+      "label": "Hotel",
+      "aliases": ["hotel", "hotels", "resort", "lodging", "住宿", "酒店"]
+    },
+    {
+      "id": "airfare",
+      "label": "Airfare",
+      "aliases": ["flight", "flights", "airline", "airfare", "机票", "航班"]
+    },
+    {
+      "id": "transit",
+      "label": "Transit",
+      "aliases": ["transit", "rideshare", "uber", "lyft", "taxi", "subway", "bus", "commute", "打车", "通勤"]
+    },
+    {
+      "id": "drugstore",
+      "label": "Drugstore",
+      "aliases": ["drugstore", "pharmacy", "cvs", "walgreens", "药店"]
+    },
+    {
+      "id": "department_store",
+      "label": "Department Store",
+      "aliases": ["department store", "department stores", "macy's", "macys", "saks", "nordstrom", "百货", "百货店", "商场"]
+    },
+    {
+      "id": "clothing",
+      "label": "Clothing",
+      "aliases": ["clothing", "clothes", "apparel", "shoes", "sneakers", "suit", "dress", "衣服", "服装", "鞋", "西装"]
+    },
+    {
+      "id": "electronics",
+      "label": "Electronics",
+      "aliases": ["electronics", "computer", "phone", "laptop", "appliance", "电器", "电脑", "手机"]
+    },
+    {
+      "id": "home_improvement",
+      "label": "Home Improvement",
+      "aliases": ["home improvement", "hardware", "furniture", "家居", "家具", "装修"]
+    },
+    {
+      "id": "streaming",
+      "label": "Streaming",
+      "aliases": ["streaming", "subscription", "netflix", "spotify", "hulu"]
+    },
+    {
+      "id": "fitness",
+      "label": "Fitness",
+      "aliases": ["fitness", "gym", "pilates", "健身"]
+    },
+    {
+      "id": "financial",
+      "label": "Financial",
+      "aliases": ["financial", "insurance", "loan", "信用", "保险"]
+    },
+    {
+      "id": "entertainment",
+      "label": "Entertainment",
+      "aliases": ["entertainment", "movie", "movies", "theater", "ticket", "演出", "电影"]
+    },
+    {
+      "id": "general_shopping",
+      "label": "General Shopping",
+      "aliases": ["shopping", "retail", "store", "shop", "买", "购物"]
+    }
+  ],
+  "legacyCategoryMap": {
+    "restaurant": "dining",
+    "dining": "dining",
+    "grocery": "grocery",
+    "gas": "gas",
+    "travel": "travel",
+    "hotel": "hotel",
+    "airfare": "airfare",
+    "drugstore": "drugstore",
+    "shopping": "general_shopping",
+    "streaming": "streaming",
+    "financial": "financial",
+    "entertainment": "entertainment",
+    "health": "fitness"
+  }
+}

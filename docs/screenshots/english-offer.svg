@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">
+  <rect width="960" height="620" fill="#f6f8fa"/>
+  <rect x="70" y="54" width="820" height="512" rx="14" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="100" y="102" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#24292f">CreditCardMaster</text>
+  <text x="100" y="136" font-family="Arial, sans-serif" font-size="15" fill="#57606a">CLI checkout advice, English query</text>
+  <rect x="100" y="164" width="760" height="48" rx="8" fill="#0d1117"/>
+  <text x="122" y="195" font-family="Menlo, Consolas, monospace" font-size="16" fill="#c9d1d9">$ npm run ask "macy's"</text>
+  <text x="100" y="250" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">Recognized: Macy's</text>
+  <text x="100" y="288" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">Use:</text>
+  <text x="100" y="318" font-family="Menlo, Consolas, monospace" font-size="16" fill="#0969da">Amex - Macy's: Spend $50 or more, earn $10 back</text>
+  <text x="100" y="358" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">Reasoning:</text>
+  <text x="100" y="388" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">- Offer match; activate first, expires 2026-08-31.</text>
+  <text x="100" y="430" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">Before paying:</text>
+  <text x="100" y="460" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">- Activate Amex offer: Macy's</text>
+  <text x="100" y="502" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">Relevant offers:</text>
+  <text x="100" y="532" font-family="Menlo, Consolas, monospace" font-size="16" fill="#24292f">- Amex: Macy's - Spend $50 or more, earn $10 back</text>
+</svg>

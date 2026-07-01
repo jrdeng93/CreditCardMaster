@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">
+  <rect width="960" height="620" fill="#f6f8fa"/>
+  <rect x="70" y="54" width="820" height="512" rx="14" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="100" y="102" font-family="Arial, PingFang SC, sans-serif" font-size="24" font-weight="700" fill="#24292f">CreditCardMaster</text>
+  <text x="100" y="136" font-family="Arial, PingFang SC, sans-serif" font-size="15" fill="#57606a">中文问题自动返回中文 UI</text>
+  <rect x="100" y="164" width="760" height="48" rx="8" fill="#0d1117"/>
+  <text x="122" y="195" font-family="Menlo, Consolas, monospace" font-size="16" fill="#c9d1d9">$ npm run ask "今晚吃饭"</text>
+  <text x="100" y="250" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">识别: dining</text>
+  <text x="100" y="288" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">使用:</text>
+  <text x="100" y="318" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#0969da">Amex Gold Card - 4X Membership Rewards at restaurants.</text>
+  <text x="100" y="358" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">原因:</text>
+  <text x="100" y="388" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">- 匹配到卡片基础福利。</text>
+  <text x="100" y="418" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">- 钱包策略: MR valued at 1.5 cpp</text>
+  <text x="100" y="460" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">相关 offer:</text>
+  <text x="100" y="490" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">- Amex: Local Cafe - Spend $40, earn $10 back (需激活)</text>
+  <text x="100" y="532" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">备选卡:</text>
+  <text x="100" y="562" font-family="Menlo, PingFang SC, monospace" font-size="16" fill="#24292f">1. Amex Blue Cash Preferred Card - grocery / gas backup</text>
+</svg>

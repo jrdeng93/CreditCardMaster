@@ -1,0 +1,150 @@
+{
+  "updatedAt": "2026-07-01",
+  "cards": [
+    {
+      "issuer": "amex",
+      "cardName": "Platinum Card",
+      "cardLast4": "",
+      "aliases": ["amex platinum", "platinum", "fhr", "centurion lounge"],
+      "bestFor": [
+        "flights",
+        "prepaid hotels through American Express Travel",
+        "airport lounge access",
+        "premium hotel stays"
+      ],
+      "rules": [
+        {
+          "category": "airfare",
+          "keywords": ["flight", "airline", "airfare", "delta", "united", "aa", "plane"],
+          "summary": "5X Membership Rewards on flights booked directly with airlines or through American Express Travel, up to the annual cap.",
+          "score": 8
+        },
+        {
+          "category": "hotel",
+          "keywords": ["hotel", "resort", "fhr", "fine hotels", "amex travel", "prepaid hotel"],
+          "summary": "5X on prepaid hotels booked through American Express Travel, plus premium hotel credits/benefits when eligible.",
+          "score": 8
+        },
+        {
+          "category": "lounge",
+          "keywords": ["lounge", "airport", "centurion", "priority pass", "sky club"],
+          "summary": "Strong Amex card for lounge access and premium travel benefits.",
+          "score": 9
+        },
+        {
+          "category": "points_transfer",
+          "keywords": ["transfer", "transfer points", "转点", "转积分", "membership rewards", "mr"],
+          "summary": "Membership Rewards points can transfer to airline and hotel partners when redemption value beats cash back.",
+          "score": 6
+        }
+      ],
+      "notes": [
+        "Strong benefit card, not a general everyday earning card.",
+        "Many credits require enrollment or portal booking."
+      ],
+      "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum/",
+      "lastVerifiedAt": "2026-07-01",
+      "verificationNote": "Verify current issuer terms before use."
+    },
+    {
+      "issuer": "amex",
+      "cardName": "Gold Card",
+      "cardLast4": "",
+      "aliases": ["amex gold", "gold card"],
+      "bestFor": [
+        "dining",
+        "U.S. supermarkets",
+        "Membership Rewards earning"
+      ],
+      "rules": [
+        {
+          "category": "restaurant",
+          "keywords": ["restaurant", "dining", "takeout", "delivery", "coffee"],
+          "summary": "4X Membership Rewards at restaurants, subject to current Amex terms.",
+          "score": 8
+        },
+        {
+          "category": "grocery",
+          "keywords": ["grocery", "supermarket", "market"],
+          "summary": "4X Membership Rewards at U.S. supermarkets, up to the annual cap.",
+          "score": 8
+        },
+        {
+          "category": "points_transfer",
+          "keywords": ["transfer", "transfer points", "转点", "转积分", "membership rewards", "mr"],
+          "summary": "Membership Rewards points can transfer to airline and hotel partners.",
+          "score": 6
+        }
+      ],
+      "notes": [
+        "Useful default Amex card for dining and U.S. supermarket purchases."
+      ],
+      "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card/",
+      "lastVerifiedAt": "2026-07-01",
+      "verificationNote": "Verify current issuer terms before use."
+    },
+    {
+      "issuer": "amex",
+      "cardName": "Blue Cash Preferred Card",
+      "cardLast4": "",
+      "aliases": ["blue cash preferred", "bcp"],
+      "bestFor": [
+        "U.S. supermarkets",
+        "U.S. streaming subscriptions",
+        "U.S. gas stations"
+      ],
+      "rules": [
+        {
+          "category": "grocery",
+          "keywords": ["grocery", "supermarket", "market"],
+          "summary": "High cash back at U.S. supermarkets, up to the annual cap.",
+          "score": 8
+        },
+        {
+          "category": "streaming",
+          "keywords": ["streaming", "netflix", "spotify", "hulu", "apple tv"],
+          "summary": "High cash back on select U.S. streaming subscriptions.",
+          "score": 7
+        },
+        {
+          "category": "gas",
+          "keywords": ["gas", "fuel", "gas station"],
+          "summary": "Bonus cash back at U.S. gas stations.",
+          "score": 5
+        }
+      ],
+      "notes": [
+        "Good cash-back Amex for U.S. household categories."
+      ],
+      "sourceUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/",
+      "lastVerifiedAt": "2026-07-01",
+      "verificationNote": "Verify current issuer terms before use."
+    },
+    {
+      "issuer": "amex",
+      "cardName": "Blue Business Plus Card",
+      "cardLast4": "",
+      "aliases": ["blue business plus", "bbp", "amex bbp"],
+      "bestFor": [
+        "uncategorized everyday spend",
+        "Membership Rewards earning",
+        "fallback card when no offer matches"
+      ],
+      "rules": [
+        {
+          "category": "everyday",
+          "keywords": ["everything else", "other purchase", "uncategorized", "general", "daily", "shopping"],
+          "summary": "2X Membership Rewards on everyday business purchases, up to the annual cap; verify eligibility and current terms.",
+          "score": 5,
+          "fallback": true
+        }
+      ],
+      "notes": [
+        "Useful fallback Amex when no targeted offer or stronger category bonus applies."
+      ],
+      "sourceUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-blue-business-plus-credit-card-amex/",
+      "lastVerifiedAt": "2026-07-01",
+      "verificationNote": "Verify current issuer terms before use."
+    }
+  ]
+}

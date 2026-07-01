@@ -1,0 +1,74 @@
+{
+  "merchants": [
+    {
+      "canonical": "Macy's",
+      "category": "department_store",
+      "aliases": ["macy's", "macy’s", "macys", "macy"]
+    },
+    {
+      "canonical": "Hyatt",
+      "category": "hotel",
+      "aliases": ["hyatt", "world of hyatt", "park hyatt", "andaz", "thompson"]
+    },
+    {
+      "canonical": "Marriott",
+      "category": "hotel",
+      "aliases": ["marriott", "bonvoy", "ritz", "westin", "sheraton", "st regis"]
+    },
+    {
+      "canonical": "Delta",
+      "category": "airfare",
+      "aliases": ["delta", "delta air lines", "skymiles"]
+    },
+    {
+      "canonical": "United",
+      "category": "airfare",
+      "aliases": ["united", "united airlines", "mileageplus"]
+    },
+    {
+      "canonical": "American Airlines",
+      "category": "airfare",
+      "aliases": ["american airlines", "aa", "aadvantage"]
+    },
+    {
+      "canonical": "Ray-Ban",
+      "category": "general_shopping",
+      "aliases": ["ray-ban", "rayban", "ray ban"]
+    },
+    {
+      "canonical": "Walmart",
+      "category": "general_shopping",
+      "aliases": ["walmart"]
+    },
+    {
+      "canonical": "CVS",
+      "category": "drugstore",
+      "aliases": ["cvs", "cvs pharmacy"]
+    },
+    {
+      "canonical": "Walgreens",
+      "category": "drugstore",
+      "aliases": ["walgreens"]
+    },
+    {
+      "canonical": "Uber",
+      "category": "transit",
+      "aliases": ["uber", "uber eats"]
+    },
+    {
+      "canonical": "Lyft",
+      "category": "transit",
+      "aliases": ["lyft"]
+    },
+    {
+      "canonical": "Shell",
+      "category": "gas",
+      "aliases": ["shell"]
+    },
+    {
+      "canonical": "BP",
+      "category": "gas",
+      "aliases": ["bp"]
+    }
+  ]
+}

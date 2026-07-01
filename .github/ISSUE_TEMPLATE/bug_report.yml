@@ -1,0 +1,52 @@
+name: Bug report
+description: Report a reproducible CreditCardMaster problem.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not paste bank passwords, Discord tokens, cookies, real card numbers, or screenshots containing private account data.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Discord assistant
+        - Amex refresh
+        - Offer search
+        - Card benefits
+        - Manual offers
+        - Doctor of Credit monitor
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Run ...
+        2. Ask ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: "e.g. 304ec19"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Remove tokens, webhooks, account IDs, card IDs, cookies, and personal data before pasting.
+      render: text

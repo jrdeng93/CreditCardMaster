@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="620" viewBox="0 0 1280 620">
+  <rect width="1280" height="620" fill="#ffffff"/>
+  <text x="70" y="78" font-family="Arial, 'PingFang SC', sans-serif" font-size="38" font-weight="800" fill="#0b1f44">就在你准备付款的那一刻使用</text>
+  <g font-family="Arial, 'PingFang SC', sans-serif">
+    <rect x="70" y="130" width="350" height="170" rx="24" fill="#ddf4ff" stroke="#54aeef" stroke-width="2"/>
+    <text x="104" y="184" font-size="28" font-weight="800" fill="#0b1f44">付款前</text>
+    <text x="104" y="224" font-size="18" fill="#57606a">在 Macy's、Dell、Resy、餐厅、</text>
+    <text x="104" y="254" font-size="18" fill="#57606a">加油站付款前问一下。</text>
+
+    <rect x="465" y="130" width="350" height="170" rx="24" fill="#dafbe1" stroke="#2da44e" stroke-width="2"/>
+    <text x="499" y="184" font-size="28" font-weight="800" fill="#0b1f44">选卡时</text>
+    <text x="499" y="224" font-size="18" fill="#57606a">同时比较 offer、bonus 类别、</text>
+    <text x="499" y="254" font-size="18" fill="#57606a">credits、积分和返现。</text>
+
+    <rect x="860" y="130" width="350" height="170" rx="24" fill="#fff8c5" stroke="#d4a72c" stroke-width="2"/>
+    <text x="894" y="184" font-size="28" font-weight="800" fill="#0b1f44">收到临时 offer 时</text>
+    <text x="894" y="224" font-size="18" fill="#57606a">邮件、app、账户消息里的 bonus</text>
+    <text x="894" y="254" font-size="18" fill="#57606a">补进数据库，之后可搜索。</text>
+
+    <rect x="70" y="350" width="350" height="170" rx="24" fill="#fbefff" stroke="#bf87ff" stroke-width="2"/>
+    <text x="104" y="404" font-size="28" font-weight="800" fill="#0b1f44">每天早上</text>
+    <text x="104" y="444" font-size="18" fill="#57606a">收到信用卡新闻热门讨论</text>
+    <text x="104" y="474" font-size="18" fill="#57606a">Discord 简报。</text>
+
+    <rect x="465" y="350" width="350" height="170" rx="24" fill="#ffebe9" stroke="#ff8182" stroke-width="2"/>
+    <text x="499" y="404" font-size="28" font-weight="800" fill="#0b1f44">刷新之后</text>
+    <text x="499" y="444" font-size="18" fill="#57606a">Offers 存在 SQLite 里，</text>
+    <text x="499" y="474" font-size="18" fill="#57606a">过期前一直可以查询。</text>
+
+    <rect x="860" y="350" width="350" height="170" rx="24" fill="#eaeef2" stroke="#8c959f" stroke-width="2"/>
+    <text x="894" y="404" font-size="28" font-weight="800" fill="#0b1f44">不在家时</text>
+    <text x="894" y="444" font-size="18" fill="#57606a">手机 Discord 负责交互，</text>
+    <text x="894" y="474" font-size="18" fill="#57606a">家里的 Mac mini 负责运行。</text>
+  </g>
+</svg>

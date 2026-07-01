@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f6f8fa"/>
+  <text x="70" y="84" font-family="Arial, 'PingFang SC', sans-serif" font-size="34" font-weight="700" fill="#24292f">CreditCardMaster 能做什么</text>
+  <g font-family="Arial, 'PingFang SC', sans-serif">
+    <rect x="70" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="102" y="176" font-size="22" font-weight="700" fill="#24292f">Discord 结账助手</text>
+    <text x="102" y="214" font-size="16" fill="#57606a">在手机上用 /offers 查询，</text>
+    <text x="102" y="242" font-size="16" fill="#57606a">线下和网购付款前都能用。</text>
+    <rect x="440" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="472" y="176" font-size="22" font-weight="700" fill="#24292f">Offer 导入</text>
+    <text x="472" y="214" font-size="16" fill="#57606a">添加/导入到本地 SQLite。</text>
+    <text x="472" y="242" font-size="16" fill="#57606a">过期前一直可搜索。</text>
+    <rect x="810" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="842" y="176" font-size="22" font-weight="700" fill="#24292f">手动添加 offer</text>
+    <text x="842" y="214" font-size="16" fill="#57606a">邮件、app、账户消息里的</text>
+    <text x="842" y="242" font-size="16" fill="#57606a">targeted bonus 可以补进去。</text>
+    <rect x="70" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="102" y="416" font-size="22" font-weight="700" fill="#24292f">本地数据库</text>
+    <text x="102" y="454" font-size="16" fill="#57606a">SQLite 存在你自己的机器上。</text>
+    <text x="102" y="482" font-size="16" fill="#57606a">不需要云端账户。</text>
+    <rect x="440" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="472" y="416" font-size="22" font-weight="700" fill="#24292f">信用卡权益引擎</text>
+    <text x="472" y="454" font-size="16" fill="#57606a">理解积分、返现、</text>
+    <text x="472" y="482" font-size="16" fill="#57606a">credits 和 bonus 类别。</text>
+    <rect x="810" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="842" y="416" font-size="22" font-weight="700" fill="#24292f">新闻每日简报</text>
+    <text x="842" y="454" font-size="16" fill="#57606a">每天推送信用卡优惠</text>
+    <text x="842" y="482" font-size="16" fill="#57606a">社区热门讨论。</text>
+  </g>
+</svg>

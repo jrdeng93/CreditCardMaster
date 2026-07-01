@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest a product improvement or new module.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CreditCardMaster is local-first. Please focus requests on user value at checkout, offer capture, card benefits, or deal monitoring.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Better onboarding
+        - Offer refresh
+        - Card benefits
+        - Search/recommendation quality
+        - Manual offer parsing
+        - Discord UX
+        - Doctor of Credit monitor
+        - New issuer support
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What pain does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What should the product do?
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example queries or workflows
+      placeholder: |
+        /offers query:...
+        I received an email offer that says...

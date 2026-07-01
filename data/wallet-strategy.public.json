@@ -1,0 +1,12 @@
+{
+  "pointsValueCents": {
+    "cash": 1,
+    "mr": 1.5
+  },
+  "defaultFallbackCard": "amex:Blue Business Plus Card:",
+  "categoryFallbackCards": {
+    "general_shopping": "amex:Blue Business Plus Card:"
+  },
+  "cardPriority": {},
+  "monthlyCategoryStrategy": {}
+}

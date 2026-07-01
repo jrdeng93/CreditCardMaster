@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f6f8fa"/>
+  <rect x="62" y="56" width="1076" height="528" rx="24" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="104" y="126" font-family="Arial, 'PingFang SC', sans-serif" font-size="42" font-weight="700" fill="#24292f">CreditCardMaster</text>
+  <text x="104" y="166" font-family="Arial, 'PingFang SC', sans-serif" font-size="20" fill="#57606a">付款前问 Discord bot，查 offer、权益和最适合的卡。</text>
+  <rect x="104" y="210" width="455" height="300" rx="18" fill="#24292f"/>
+  <text x="132" y="258" font-family="Menlo, Consolas, monospace" font-size="18" fill="#c9d1d9">/offers query:macy's</text>
+  <rect x="132" y="288" width="380" height="170" rx="12" fill="#ffffff"/>
+  <text x="156" y="326" font-family="Arial, 'PingFang SC', sans-serif" font-size="16" fill="#24292f">推荐使用：</text>
+  <text x="156" y="358" font-family="Arial, 'PingFang SC', sans-serif" font-size="16" font-weight="700" fill="#0969da">Amex - Macy's</text>
+  <text x="156" y="390" font-family="Arial, 'PingFang SC', sans-serif" font-size="15" fill="#24292f">Spend $50, get $10 back</text>
+  <text x="156" y="430" font-family="Arial, 'PingFang SC', sans-serif" font-size="15" fill="#57606a">付款前：先激活 offer</text>
+  <rect x="628" y="210" width="408" height="62" rx="12" fill="#ddf4ff" stroke="#54aeef"/>
+  <text x="656" y="248" font-family="Arial, 'PingFang SC', sans-serif" font-size="18" font-weight="700" fill="#24292f">1. 本地刷新 offers</text>
+  <rect x="628" y="302" width="408" height="62" rx="12" fill="#dafbe1" stroke="#2da44e"/>
+  <text x="656" y="340" font-family="Arial, 'PingFang SC', sans-serif" font-size="18" font-weight="700" fill="#24292f">2. 手机 Discord 直接问</text>
+  <rect x="628" y="394" width="408" height="62" rx="12" fill="#fff8c5" stroke="#d4a72c"/>
+  <text x="656" y="432" font-family="Arial, 'PingFang SC', sans-serif" font-size="18" font-weight="700" fill="#24292f">3. 付款前激活并用对卡</text>
+  <text x="104" y="554" font-family="Arial, 'PingFang SC', sans-serif" font-size="16" fill="#57606a">本地优先。不保存银行密码。不绕过 MFA。公开版使用用户提供的 offers。</text>
+</svg>

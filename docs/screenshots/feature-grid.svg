@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640">
+  <rect width="1200" height="640" fill="#f6f8fa"/>
+  <text x="70" y="84" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#24292f">What CreditCardMaster does</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="70" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="102" y="176" font-size="22" font-weight="700" fill="#24292f">Discord checkout</text>
+    <text x="102" y="214" font-size="16" fill="#57606a">Ask /offers from your phone</text>
+    <text x="102" y="242" font-size="16" fill="#57606a">before paying in store or online.</text>
+    <rect x="440" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="472" y="176" font-size="22" font-weight="700" fill="#24292f">Offer import</text>
+    <text x="472" y="214" font-size="16" fill="#57606a">Add/import offers into SQLite.</text>
+    <text x="472" y="242" font-size="16" fill="#57606a">Search later until expiry.</text>
+    <rect x="810" y="126" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="842" y="176" font-size="22" font-weight="700" fill="#24292f">Manual offers</text>
+    <text x="842" y="214" font-size="16" fill="#57606a">Add targeted bonuses from</text>
+    <text x="842" y="242" font-size="16" fill="#57606a">email, app, or account pages.</text>
+    <rect x="70" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="102" y="416" font-size="22" font-weight="700" fill="#24292f">Local database</text>
+    <text x="102" y="454" font-size="16" fill="#57606a">SQLite on your machine.</text>
+    <text x="102" y="482" font-size="16" fill="#57606a">No cloud account required.</text>
+    <rect x="440" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="472" y="416" font-size="22" font-weight="700" fill="#24292f">Benefits engine</text>
+    <text x="472" y="454" font-size="16" fill="#57606a">Reason about points,</text>
+    <text x="472" y="482" font-size="16" fill="#57606a">cashback, and credits.</text>
+    <rect x="810" y="366" width="320" height="190" rx="18" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="842" y="416" font-size="22" font-weight="700" fill="#24292f">News briefing</text>
+    <text x="842" y="454" font-size="16" fill="#57606a">Daily hot credit-card</text>
+    <text x="842" y="482" font-size="16" fill="#57606a">discussion digest.</text>
+  </g>
+</svg>

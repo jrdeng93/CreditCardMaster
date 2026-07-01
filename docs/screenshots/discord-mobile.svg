@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">
+  <rect width="960" height="620" fill="#f6f8fa"/>
+  <rect x="330" y="42" width="300" height="536" rx="34" fill="#24292f"/>
+  <rect x="348" y="76" width="264" height="468" rx="22" fill="#ffffff"/>
+  <text x="372" y="116" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#24292f">Discord</text>
+  <text x="372" y="140" font-family="Arial, sans-serif" font-size="12" fill="#57606a"># creditcardmaster</text>
+  <rect x="372" y="168" width="216" height="56" rx="12" fill="#eef2ff"/>
+  <text x="386" y="192" font-family="Arial, sans-serif" font-size="13" fill="#24292f">/offers query: macy's</text>
+  <text x="386" y="212" font-family="Arial, sans-serif" font-size="12" fill="#57606a">Sent from phone before checkout</text>
+  <rect x="372" y="248" width="216" height="188" rx="12" fill="#f6f8fa" stroke="#d0d7de"/>
+  <text x="386" y="276" font-family="Menlo, Consolas, monospace" font-size="12" fill="#24292f">Use:</text>
+  <text x="386" y="298" font-family="Menlo, Consolas, monospace" font-size="12" fill="#0969da">Amex - Macy's</text>
+  <text x="386" y="320" font-family="Menlo, Consolas, monospace" font-size="12" fill="#24292f">Spend $50, get $10 back</text>
+  <text x="386" y="354" font-family="Menlo, Consolas, monospace" font-size="12" fill="#24292f">Before paying:</text>
+  <text x="386" y="376" font-family="Menlo, Consolas, monospace" font-size="12" fill="#24292f">- Activate Amex offer</text>
+  <text x="386" y="410" font-family="Menlo, Consolas, monospace" font-size="12" fill="#24292f">Relevant offers: 1</text>
+  <rect x="372" y="464" width="216" height="44" rx="12" fill="#eef2ff"/>
+  <text x="386" y="492" font-family="Arial, sans-serif" font-size="13" fill="#24292f">/addoffer merchant: Macy's</text>
+</svg>

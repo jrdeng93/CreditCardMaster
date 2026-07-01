@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="520" viewBox="0 0 1280 520">
+  <rect width="1280" height="520" fill="#f6f8fa"/>
+  <text x="70" y="78" font-family="Arial, sans-serif" font-size="38" font-weight="800" fill="#0b1f44">Set it up once, ask from Discord anytime</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="80" y="170" width="220" height="130" rx="22" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="120" y="222" font-size="24" font-weight="800" fill="#0b1f44">Refresh</text>
+    <text x="120" y="258" font-size="17" fill="#57606a">Weekly Amex pull</text>
+
+    <rect x="370" y="170" width="220" height="130" rx="22" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="410" y="222" font-size="24" font-weight="800" fill="#0b1f44">Persist</text>
+    <text x="410" y="258" font-size="17" fill="#57606a">SQLite until expiry</text>
+
+    <rect x="660" y="170" width="220" height="130" rx="22" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="700" y="222" font-size="24" font-weight="800" fill="#0b1f44">Reason</text>
+    <text x="700" y="258" font-size="17" fill="#57606a">Offers + benefits</text>
+
+    <rect x="950" y="170" width="220" height="130" rx="22" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+    <text x="990" y="222" font-size="24" font-weight="800" fill="#0b1f44">Answer</text>
+    <text x="990" y="258" font-size="17" fill="#57606a">Discord on phone</text>
+  </g>
+  <g stroke="#0969da" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M300 235 C320 235 345 235 370 235"/>
+    <path d="M590 235 C610 235 635 235 660 235"/>
+    <path d="M880 235 C900 235 925 235 950 235"/>
+  </g>
+  <g fill="#0969da">
+    <path d="M365 226 L385 235 L365 244 Z"/>
+    <path d="M655 226 L675 235 L655 244 Z"/>
+    <path d="M945 226 L965 235 L945 244 Z"/>
+  </g>
+  <rect x="324" y="370" width="632" height="76" rx="20" fill="#0b1f44"/>
+  <text x="374" y="418" font-family="Menlo, Consolas, monospace" font-size="20" fill="#ffffff">/addoffer or npm run add-offer</text>
+</svg>

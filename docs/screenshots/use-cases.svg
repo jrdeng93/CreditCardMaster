@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="620" viewBox="0 0 1280 620">
+  <rect width="1280" height="620" fill="#ffffff"/>
+  <text x="70" y="78" font-family="Arial, sans-serif" font-size="38" font-weight="800" fill="#0b1f44">Use it at the moment money leaves your wallet</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="70" y="130" width="350" height="170" rx="24" fill="#ddf4ff" stroke="#54aeef" stroke-width="2"/>
+    <text x="104" y="184" font-size="28" font-weight="800" fill="#0b1f44">At checkout</text>
+    <text x="104" y="224" font-size="18" fill="#57606a">Ask before paying at Macy's, Dell,</text>
+    <text x="104" y="254" font-size="18" fill="#57606a">Resy, restaurants, gas stations.</text>
+
+    <rect x="465" y="130" width="350" height="170" rx="24" fill="#dafbe1" stroke="#2da44e" stroke-width="2"/>
+    <text x="499" y="184" font-size="28" font-weight="800" fill="#0b1f44">When choosing a card</text>
+    <text x="499" y="224" font-size="18" fill="#57606a">Compare offer value, bonus categories,</text>
+    <text x="499" y="254" font-size="18" fill="#57606a">credits, points, and cashback.</text>
+
+    <rect x="860" y="130" width="350" height="170" rx="24" fill="#fff8c5" stroke="#d4a72c" stroke-width="2"/>
+    <text x="894" y="184" font-size="28" font-weight="800" fill="#0b1f44">When offers arrive</text>
+    <text x="894" y="224" font-size="18" fill="#57606a">Add email/app targeted bonuses</text>
+    <text x="894" y="254" font-size="18" fill="#57606a">so Discord can find them later.</text>
+
+    <rect x="70" y="350" width="350" height="170" rx="24" fill="#fbefff" stroke="#bf87ff" stroke-width="2"/>
+    <text x="104" y="404" font-size="28" font-weight="800" fill="#0b1f44">Every morning</text>
+    <text x="104" y="444" font-size="18" fill="#57606a">Get a credit-card news briefing</text>
+    <text x="104" y="474" font-size="18" fill="#57606a">for hot card deal discussions.</text>
+
+    <rect x="465" y="350" width="350" height="170" rx="24" fill="#ffebe9" stroke="#ff8182" stroke-width="2"/>
+    <text x="499" y="404" font-size="28" font-weight="800" fill="#0b1f44">After refresh</text>
+    <text x="499" y="444" font-size="18" fill="#57606a">Offers stay in SQLite and remain</text>
+    <text x="499" y="474" font-size="18" fill="#57606a">searchable until expiration.</text>
+
+    <rect x="860" y="350" width="350" height="170" rx="24" fill="#eaeef2" stroke="#8c959f" stroke-width="2"/>
+    <text x="894" y="404" font-size="28" font-weight="800" fill="#0b1f44">Away from home</text>
+    <text x="894" y="444" font-size="18" fill="#57606a">Use Discord from your phone.</text>
+    <text x="894" y="474" font-size="18" fill="#57606a">The Mac mini does the work.</text>
+  </g>
+</svg>
