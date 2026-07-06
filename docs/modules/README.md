@@ -8,6 +8,8 @@
 | 🔁 [Offer import](offer-refresh.md) | Manual/user-provided offers and local persistence |
 | 🧰 [Custom importer template](custom-importer-template.md) | Build your own local offer importer |
 | 💳 [Card benefits](card-benefits.md) | Points, cashback, credits, bonus categories, wallet strategy |
+| 🔎 [Local RAG retrieval](rag.md) | LangChain + FAISS retrieval for fuzzy merchant, offer, and card context |
+| 🐍 [Python runtime](python-runtime.md) | Python CLI implementation that shares the same local data and safety boundary |
 | 🛍️ [Shopping portals](shopping-portals.md) | Rakuten portal entry checks |
 | 🎯 [Manual offers](manual-offers.md) | Targeted email/app/account-message offers |
 | 📰 [Credit card news](doctor-of-credit-monitor.md) | RSS-based daily hot-discussion Discord briefing |

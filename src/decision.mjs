@@ -35,7 +35,15 @@ export function buildDecision(result) {
     };
   }
 
-  return candidates[0];
+  const selected = candidates[0];
+  if (selected.type === "base_card" && hasAmountBlockedOffer(result.offers, result.intent)) {
+    return {
+      ...selected,
+      reason: "Matching offer does not meet this purchase amount; use the card recommendation instead.",
+    };
+  }
+
+  return selected;
 }
 
 export function formatDecision(decision) {
@@ -90,9 +98,21 @@ function buildBaseCardCandidate(item) {
 }
 
 function isOfferEligibleForBestChoice(row, intent = {}) {
+  if (isBelowOfferMinimum(row, intent)) return false;
   if (intent.merchant) return true;
   if (isManualOffer(row)) return true;
   return false;
+}
+
+function hasAmountBlockedOffer(rows = [], intent = {}) {
+  return rows.some((row) => isBelowOfferMinimum(row, intent));
+}
+
+function isBelowOfferMinimum(row, intent = {}) {
+  if (intent.amount == null || intent.amount === "") return false;
+  const amount = Number(intent.amount);
+  const minSpend = Number(row.min_spend);
+  return Number.isFinite(amount) && Number.isFinite(minSpend) && minSpend > 0 && amount < minSpend;
 }
 
 function rewardValueScore(row) {

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { canonicalizeCategory, classifyQuery, normalizeText } from "./canonical.mjs";
+import { canonicalizeCategory, classifyQuery, compactText, normalizeText } from "./canonical.mjs";
 import { parseIntent } from "./intent.mjs";
 import { expandTerms, formatOffers, queryTokens, searchExpiredOffers, searchOffers } from "./search.mjs";
 import { buildDecision } from "./decision.mjs";
@@ -9,6 +9,7 @@ import { applyWalletStrategyToRecommendations, loadWalletStrategy } from "./wall
 import { resolveLanguage, t } from "./i18n.mjs";
 import { getDistributionMode, PUBLIC_DISTRIBUTION } from "./distribution.mjs";
 import { buildPortalChecks, formatPortalCheck } from "./portals.mjs";
+import { retrieveRagContext } from "./rag-client.mjs";
 
 const BENEFITS_PATH = join(process.cwd(), "data", "card-benefits.json");
 const PUBLIC_BENEFITS_PATH = join(process.cwd(), "data", "card-benefits.public.json");
@@ -45,8 +46,9 @@ export function recommendCards(query, options = {}) {
 
   return benefitData.cards
     .map((card) => {
-      const matchedRules = matchRules(card, context);
+      const ruleMatches = matchRules(card, context);
       const aliasScore = matchAliases(card, context);
+      const matchedRules = ruleMatches.length ? ruleMatches : aliasScore ? cardSummaryRules(card) : [];
       const score = matchedRules.reduce((sum, rule) => sum + rule.score, 0) + aliasScore;
       return { card, matchedRules, score };
     })
@@ -56,19 +58,33 @@ export function recommendCards(query, options = {}) {
 }
 
 export function searchWithRecommendations(db, query, options = {}) {
-  const intent = options.intent || {
+  let intent = options.intent || {
     rawQuery: query,
     offerSearchQuery: query,
     recommendationQuery: query,
     parser: "raw",
   };
-  const offerSearchQuery = intent.offerSearchQuery || query;
-  const recommendationQuery = intent.recommendationQuery || offerSearchQuery;
-  const requiredTerms = intent.merchant ? queryTokens(intent.merchant) : [];
-  const offers = searchOffers(db, offerSearchQuery, {
+  const ragContext = retrieveRagContext(query, options);
+  intent = enrichIntentFromRag(intent, query, ragContext);
+  let offerSearchQuery = intent.offerSearchQuery || query;
+  let requiredTerms = intent.merchant ? queryTokens(intent.merchant) : [];
+  let offers = searchOffers(db, offerSearchQuery, {
     limit: options.offerLimit ?? 8,
     requiredTerms,
   });
+
+  const enrichedIntent = enrichIntentFromOfferMatches(intent, query, offers);
+  if (enrichedIntent !== intent) {
+    intent = enrichedIntent;
+    offerSearchQuery = intent.offerSearchQuery || query;
+    requiredTerms = intent.merchant ? queryTokens(intent.merchant) : [];
+    offers = searchOffers(db, offerSearchQuery, {
+      limit: options.offerLimit ?? 8,
+      requiredTerms,
+    });
+  }
+
+  const recommendationQuery = intent.recommendationQuery || offerSearchQuery;
   const expiredOffers = offers.length
     ? []
     : searchExpiredOffers(db, offerSearchQuery, {
@@ -97,9 +113,112 @@ export function searchWithRecommendations(db, query, options = {}) {
   });
   const watchlistMatches = findWatchlistMatches(db, intent);
   const portalChecks = buildPortalChecks(intent, options);
-  const result = { intent, offers, expiredOffers, recommendations: finalRecommendations, conditionalBenefitTips, watchlistMatches, walletStrategy, portalChecks };
+  const result = { intent, offers, expiredOffers, recommendations: finalRecommendations, conditionalBenefitTips, watchlistMatches, walletStrategy, portalChecks, ragContext };
   return { ...result, decision: buildDecision(result) };
 }
+
+function enrichIntentFromRag(intent, query, ragContext) {
+  if (intent.merchant || !ragContext?.merchant) return intent;
+  const merchant = ragContext.merchant;
+  if (Number(merchant.score || 0) < 1) return intent;
+  return {
+    ...intent,
+    merchant: merchant.merchant,
+    category: merchant.category || intent.category,
+    offerSearchQuery: merchant.merchant,
+    recommendationQuery: [merchant.merchant, merchant.category, intent.rawQuery || query]
+      .map((value) => String(value || "").trim())
+      .filter(Boolean)
+      .join(" "),
+    parser: `${intent.parser || "unknown"}+rag`,
+    inferredFromRag: true,
+  };
+}
+
+function enrichIntentFromOfferMatches(intent, query, offers) {
+  if (intent.merchant || !offers?.length) return intent;
+
+  const match = inferMerchantFromOfferMatches(query, offers);
+  if (!match) return intent;
+
+  const merchant = match.canonicalMerchant || match.merchant;
+  const category = match.canonicalCategory || canonicalizeCategory(match.category) || intent.category;
+  return {
+    ...intent,
+    merchant,
+    category,
+    offerSearchQuery: merchant,
+    recommendationQuery: [merchant, category, intent.rawQuery || query]
+      .map((value) => String(value || "").trim())
+      .filter(Boolean)
+      .join(" "),
+    parser: `${intent.parser || "unknown"}+offer_match`,
+    inferredFromOffers: true,
+  };
+}
+
+function inferMerchantFromOfferMatches(query, offers) {
+  const terms = queryTokens(query).filter((term) => !GENERIC_QUERY_TERMS.has(term));
+  const compactQuery = compactText(query);
+  if (!terms.length && compactQuery.length < 4) return null;
+
+  const merchants = new Map();
+  for (const row of offers) {
+    const score = merchantQueryMatchScore(row, terms, compactQuery);
+    if (score <= 0) continue;
+
+    const key = compactText(row.canonical_merchant || row.merchant);
+    const current = merchants.get(key) || {
+      score: 0,
+      count: 0,
+      merchant: row.merchant,
+      canonicalMerchant: row.canonical_merchant,
+      category: row.category,
+      canonicalCategory: row.canonical_category,
+    };
+    current.score += score;
+    current.count += 1;
+    merchants.set(key, current);
+  }
+
+  const ranked = [...merchants.values()]
+    .sort((a, b) => b.score - a.score || b.count - a.count || String(a.merchant).localeCompare(String(b.merchant)));
+  const best = ranked[0];
+  if (!best || best.score < 2) return null;
+  if (ranked[1] && ranked[1].score === best.score && ranked[1].count === best.count) return null;
+  return best;
+}
+
+function merchantQueryMatchScore(row, terms, compactQuery) {
+  const merchant = String(row.canonical_merchant || row.merchant || "");
+  const merchantTokens = new Set(queryTokens(merchant));
+  const compactMerchant = compactText(merchant);
+  let score = 0;
+
+  for (const term of terms) {
+    if (merchantTokens.has(term)) score += 4;
+    if (term.length >= 4 && compactMerchant.includes(term)) score += 3;
+  }
+  if (compactQuery.length >= 4 && !GENERIC_QUERY_TERMS.has(compactQuery) && compactMerchant.includes(compactQuery)) score += 5;
+  return score;
+}
+
+const GENERIC_QUERY_TERMS = new Set([
+  "buy",
+  "card",
+  "cashback",
+  "check",
+  "deal",
+  "offer",
+  "portal",
+  "purchase",
+  "rakuten",
+  "shop",
+  "shopping",
+  "store",
+  "use",
+  "which",
+]);
 
 export async function askWithRecommendations(db, query, options = {}) {
   const intent = await parseIntent(query, options);
@@ -223,9 +342,10 @@ export function formatCompactRecommendations(items, conditionalBenefitTips = [],
     .map((item, index) => {
       const rule = item.matchedRules[0];
       const confidence = item.card.lastVerifiedAt ? ` [${t(lang, "reviewed")} ${item.card.lastVerifiedAt}]` : ` [${t(lang, "verify")}]`;
-      const wallet = item.walletAdjustments?.length ? ` [${item.walletAdjustments.join("; ")}]` : "";
+      const walletAdjustments = (item.walletAdjustments || []).map((adjustment) => localizeWalletAdjustment(adjustment, lang));
+      const wallet = walletAdjustments.length ? ` [${walletAdjustments.join("; ")}]` : "";
       const addOn = formatConditionalBenefitAddOn(item, conditionalBenefitTips, lang);
-      return `${index + 1}. ${cardLabel(item.card)}${confidence} - ${rule?.summary || "benefit match"}${wallet}${addOn}`;
+      return `${index + 1}. ${cardLabel(item.card)}${confidence} - ${localizeBenefitSummary(rule?.summary || "benefit match", lang)}${wallet}${addOn}`;
     })
     .join("\n");
 }
@@ -251,11 +371,11 @@ function formatActionDecision(result, lang = "en") {
   const beforePaying = beforePayingItems(result, lang);
   return [
     `${t(lang, "use")}:`,
-    `${decision.label} - ${decision.summary}`,
+    `${decision.label} - ${localizeBenefitSummary(decision.summary, lang)}`,
     "",
     `${t(lang, "reasoning")}:`,
     `- ${localizeDecisionReason(decision.reason, lang) || t(lang, "bestAvailable")}`,
-    ...(decision.walletAdjustments || []).map((item) => `- ${t(lang, "walletStrategy")}: ${item}`),
+    ...(decision.walletAdjustments || []).map((item) => `- ${t(lang, "walletStrategy")}: ${localizeWalletAdjustment(item, lang)}`),
     result.watchlistMatches?.length ? `- ${t(lang, "watchlistMatch")}: ${formatWatchMatches(result.watchlistMatches)}` : null,
     beforePaying.length ? "" : null,
     beforePaying.length ? `${t(lang, "beforePaying")}:` : null,
@@ -297,9 +417,40 @@ function localizeDecisionReason(reason, lang) {
   if (/Offer match beats normal base earning/i.test(reason)) return "匹配到有效 offer，优先于普通卡片基础返利。";
   if (/Base card benefit match, but verify current terms/i.test(reason)) return "匹配到卡片基础福利，但使用前需要核实当前条款。";
   if (/Base card benefit match/i.test(reason)) return "匹配到卡片基础福利。";
+  if (/Matching offer does not meet this purchase amount/i.test(reason)) return "匹配到的 offer 不满足本次消费金额门槛；建议改用卡片推荐。";
   if (/No matching offer found; use this fallback card/i.test(reason)) return "没有匹配到有效 offer；建议使用这张日常兜底卡。";
   if (/Use your normal fallback card/i.test(reason)) return "使用日常默认卡；如果这是定向 offer，可以手动添加。";
   return reason;
+}
+
+function localizeBenefitSummary(summary, lang) {
+  if (!summary || lang !== "zh") return summary;
+  let text = String(summary);
+  const replacements = [
+    [/(\d+(?:\.\d+)?)X Ultimate Rewards points on dining\./i, "餐饮消费赚 $1 倍 Ultimate Rewards 点数。"],
+    [/(\d+(?:\.\d+)?)X ThankYou Points at restaurants outside Citi Nights windows\./i, "非 Citi Nights 时段餐厅消费赚 $1 倍 ThankYou Points。"],
+    [/(\d+(?:\.\d+)?)X ThankYou Points on all other purchases\./i, "其它日常消费赚 $1 倍 ThankYou Points。"],
+    [/(\d+(?:\.\d+)?)% cash back on dining\./i, "餐饮消费 $1% 返现。"],
+    [/(\d+(?:\.\d+)?)% cash back on all other purchases\./i, "其它日常消费 $1% 返现。"],
+    [/(\d+(?:\.\d+)?)X Membership Rewards at restaurants, subject to current Amex terms\./i, "餐厅消费赚 $1 倍 Membership Rewards，需以 Amex 当前条款为准。"],
+    [/Good when this purchase falls into your top eligible spend category for the billing cycle\./i, "如果本账单周期这是你的最高合资格消费类别，这张卡适合使用。"],
+    [/benefit match/i, "匹配到卡片权益"],
+  ];
+
+  for (const [pattern, replacement] of replacements) {
+    text = text.replace(pattern, replacement);
+  }
+  return text;
+}
+
+function localizeWalletAdjustment(value, lang) {
+  if (!value || lang !== "zh") return value;
+  return String(value)
+    .replace(/\b([A-Z]+) valued at ([\d.]+) cpp\b/g, "$1 按 $2 美分/点估值")
+    .replace(/preferred card in wallet strategy/gi, "钱包策略优先卡")
+    .replace(/benefits-only card; avoid for ordinary spend/gi, "偏权益卡，普通消费尽量避免")
+    .replace(/avoid unless merchant-specific/gi, "除非有商户专属权益，否则尽量避免")
+    .replace(/reserved for ([a-z_]+) this cycle/gi, "本周期保留给 $1 类别");
 }
 
 function compactConditionalBenefitSummary(rule) {
@@ -418,7 +569,7 @@ function buildFallbackRecommendationForKey(benefitData, key) {
 function offersForCompactDisplay(result, limit) {
   const offers = result.offers || [];
   if (result.decision?.type === "offer") {
-    return { selectedOnly: true, rows: offers.slice(0, limit) };
+    return { selectedOnly: true, rows: selectedOfferFirst(offers, result.decision.row).slice(0, limit) };
   }
 
   if (result.intent?.merchant) {
@@ -429,6 +580,13 @@ function offersForCompactDisplay(result, limit) {
     selectedOnly: false,
     rows: offers.slice(0, Math.min(limit, 3)),
   };
+}
+
+function selectedOfferFirst(offers, selected) {
+  if (!selected) return offers;
+  const selectedId = selected.id;
+  const rows = offers.filter((row) => row.id !== selectedId);
+  return [selected, ...rows];
 }
 
 function isFallbackRule(rule) {
@@ -476,6 +634,15 @@ function matchAliases(card, context) {
     }
   }
   return score;
+}
+
+function cardSummaryRules(card) {
+  const rules = card.rules || [];
+  const fallback = rules.find(isFallbackRule);
+  const firstRule = rules[0];
+  return [fallback || firstRule]
+    .filter(Boolean)
+    .map((rule) => ({ ...withCanonicalCategory(rule), score: rule.score || 1 }));
 }
 
 function cardKey(card) {

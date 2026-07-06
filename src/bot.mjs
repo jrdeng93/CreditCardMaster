@@ -5,9 +5,12 @@ import {
   Routes,
   SlashCommandBuilder,
 } from "discord.js";
+import { appendFileSync, mkdirSync } from "node:fs";
+import { join } from "node:path";
 import { loadEnv, getAllowedUserIds } from "./config.mjs";
 import { getStatus, migrate, openDb } from "./db.mjs";
 import { askWithRecommendations, formatSearchWithRecommendations } from "./benefits.mjs";
+import { askCCM } from "./ask-ccm.mjs";
 import { expiringOffers, formatOffers, searchOffers } from "./search.mjs";
 import { sendWebhook } from "./notify.mjs";
 import { addManualOffer, addManualOfferFromText, formatManualOfferResult } from "./manual-offers.mjs";
@@ -43,6 +46,7 @@ if (allowedUserIds.size === 0) {
 
 const db = openDb();
 migrate(db);
+const interactionLogPath = join(process.cwd(), "state", "ccm-interactions.log");
 
 const categoryChoices = listCanonicalCategoryIds().map((category) => ({
   name: category.replaceAll("_", " "),
@@ -62,6 +66,12 @@ const commands = [
     .setDescription("Recommend which card to use, even when no offer matches")
     .addStringOption((option) =>
       option.setName("query").setDescription("Merchant or category").setRequired(true),
+    ),
+  new SlashCommandBuilder()
+    .setName("askccm")
+    .setDescription("Ask CreditCardMaster a general checkout, offer, wallet, or portal question")
+    .addStringOption((option) =>
+      option.setName("query").setDescription("Natural-language question").setRequired(true),
     ),
   new SlashCommandBuilder()
     .setName("rakuten")
@@ -153,11 +163,36 @@ const commands = [
 ].map((command) => command.toJSON());
 
 const rest = new REST({ version: "10" }).setToken(token);
-await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+try {
+  await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+} catch (error) {
+  console.warn(`Discord command registration failed; continuing with existing commands: ${error.message}`);
+}
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.on("interactionCreate", async (interaction) => {
+  try {
+    await handleInteraction(interaction);
+  } catch (error) {
+    console.error(`Interaction failed: ${error.stack || error.message}`);
+    await replyWithError(interaction, error);
+  }
+});
+
+client.on("error", (error) => {
+  console.error(`Discord client error: ${error.stack || error.message}`);
+});
+
+process.on("unhandledRejection", (error) => {
+  console.error(`Unhandled rejection: ${error?.stack || error}`);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error(`Uncaught exception: ${error.stack || error.message}`);
+});
+
+async function handleInteraction(interaction) {
   if (!interaction.isChatInputCommand()) return;
 
   if (allowedUserIds.size > 0 && !allowedUserIds.has(interaction.user.id)) {
@@ -169,7 +204,9 @@ client.on("interactionCreate", async (interaction) => {
     const query = interaction.options.getString("query", true);
     await interaction.deferReply({ ephemeral: true });
     const result = await askWithRecommendations(db, query);
-    await interaction.editReply(codeBlock(formatSearchWithRecommendations(result)));
+    const output = formatSearchWithRecommendations(result);
+    logInteraction({ interaction, query, route: "offers", output });
+    await interaction.editReply(codeBlock(output));
     return;
   }
 
@@ -177,7 +214,18 @@ client.on("interactionCreate", async (interaction) => {
     const query = interaction.options.getString("query", true);
     await interaction.deferReply({ ephemeral: true });
     const result = await askWithRecommendations(db, query);
-    await interaction.editReply(codeBlock(formatSearchWithRecommendations(result, { showOffers: false })));
+    const output = formatSearchWithRecommendations(result, { showOffers: false });
+    logInteraction({ interaction, query, route: "bestcard", output });
+    await interaction.editReply(codeBlock(output));
+    return;
+  }
+
+  if (interaction.commandName === "askccm") {
+    const query = interaction.options.getString("query", true);
+    await interaction.deferReply({ ephemeral: true });
+    const answer = await askCCM(db, query);
+    logInteraction({ interaction, query, route: answer.route?.type || "askccm", output: answer.output });
+    await interaction.editReply(codeBlock(answer.output));
     return;
   }
 
@@ -185,6 +233,7 @@ client.on("interactionCreate", async (interaction) => {
     const query = interaction.options.getString("query", true);
     const checks = buildPortalChecks({ merchant: query, rawQuery: query });
     const output = checks.length ? checks.map((check) => formatPortalCheck(check)).join("\n") : "No Rakuten check for this query.";
+    logInteraction({ interaction, query, route: "rakuten", output });
     await interaction.reply({ content: codeBlock(output), ephemeral: true });
     return;
   }
@@ -260,7 +309,7 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "offerstatus") {
     await interaction.reply({ content: codeBlock(JSON.stringify(getStatus(db), null, 2)), ephemeral: true });
   }
-});
+}
 
 client.once("clientReady", async () => {
   console.log(`Discord bot logged in as ${client.user.tag}`);
@@ -276,4 +325,39 @@ await client.login(token);
 function codeBlock(text) {
   const safe = String(text).slice(0, 1800).replaceAll("```", "`\u200b``");
   return `\`\`\`\n${safe}\n\`\`\``;
+}
+
+function logInteraction({ interaction, query, route, output }) {
+  try {
+    mkdirSync(join(process.cwd(), "state"), { recursive: true });
+    appendFileSync(interactionLogPath, `${JSON.stringify({
+      at: new Date().toISOString(),
+      command: interaction.commandName,
+      route,
+      query,
+      output: String(output || "").slice(0, 2500),
+    })}\n`);
+  } catch (error) {
+    console.warn(`Could not write interaction log: ${error.message}`);
+  }
+}
+
+async function replyWithError(interaction, error) {
+  logInteraction({
+    interaction,
+    query: interaction?.options?.getString?.("query", false) || "",
+    route: "error",
+    output: error.message,
+  });
+  if (!interaction?.isRepliable?.()) return;
+  const content = codeBlock(`CreditCardMaster error: ${error.message}`);
+  try {
+    if (interaction.deferred || interaction.replied) {
+      await interaction.editReply(content);
+    } else {
+      await interaction.reply({ content, ephemeral: true });
+    }
+  } catch (replyError) {
+    console.error(`Could not send error reply: ${replyError.stack || replyError.message}`);
+  }
 }

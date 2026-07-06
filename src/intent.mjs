@@ -2,7 +2,7 @@ import { getOllamaConfig } from "./config.mjs";
 import { canonicalizeCategory, canonicalizeMerchant, classifyQuery, normalizeText } from "./canonical.mjs";
 
 const CATEGORY_KEYWORDS = [
-  ["dining", ["restaurant", "dining", "餐厅", "吃饭", "外卖", "咖啡", "奶茶", "takeout", "delivery"]],
+  ["dining", ["restaurant", "dining", "dinner", "lunch", "brunch", "supper", "餐厅", "吃饭", "晚饭", "午饭", "外卖", "咖啡", "奶茶", "takeout", "delivery"]],
   ["hotel", ["hotel", "酒店", "hyatt", "marriott", "hilton", "resort", "住宿"]],
   ["airfare", ["flight", "airline", "机票", "航班", "delta", "united", "american airlines", "aa"]],
   ["travel", ["travel", "旅行", "旅游", "租车", "rental car", "uber", "lyft", "turo"]],

@@ -1,4 +1,17 @@
-const DEFAULT_RAKUTEN_TEMPLATE = "https://www.rakuten.com/stores/all?query={query}";
+const DEFAULT_RAKUTEN_TEMPLATE = "https://www.rakuten.com/{domain}";
+const RAKUTEN_STORE_SLUGS = new Map([
+  ["macys", "macys"],
+  ["macy's", "macys"],
+  ["macy", "macys"],
+  ["nike", "nike"],
+  ["nike.com", "nike"],
+  ["lululemon", "lululemon"],
+  ["lululemon.com", "lululemon"],
+  ["lululemom", "lululemon"],
+  ["visible", "visible"],
+  ["visible.com", "visible"],
+  ["visiblebyverizon", "visible"],
+]);
 const PORTAL_CATEGORIES = new Set([
   "department_store",
   "clothing",
@@ -25,10 +38,10 @@ export function buildPortalChecks(intent = {}, options = {}) {
       provider: "Rakuten",
       label: "Rakuten",
       query,
-      url: buildRakutenUrl(query, env),
+      url: intent.merchant ? buildRakutenUrl(query, env) : buildRakutenHomeUrl(env),
       reason: intent.merchant
-        ? "Check shopping portal cash back before clicking through."
-        : "Check shopping portal cash back for this category before buying.",
+        ? "Open the merchant's Rakuten store page before clicking through."
+        : "Open Rakuten and verify the current cash back rate before buying.",
     },
   ];
 }
@@ -53,8 +66,39 @@ function shouldSuggestPortal(intent = {}) {
 }
 
 function buildRakutenUrl(query, env = process.env) {
+  const direct = directRakutenStoreUrl(query);
+  if (direct) return direct;
+
   const template = String(env.RAKUTEN_SEARCH_URL_TEMPLATE || DEFAULT_RAKUTEN_TEMPLATE);
+  const domain = merchantDomainCandidate(query);
   return template.includes("{query}")
     ? template.replaceAll("{query}", encodeURIComponent(query))
+    : template.includes("{domain}")
+    ? template.replaceAll("{domain}", encodeURIComponent(domain))
     : `${template}${encodeURIComponent(query)}`;
+}
+
+function buildRakutenHomeUrl(env = process.env) {
+  return String(env.RAKUTEN_HOME_URL || "https://www.rakuten.com/");
+}
+
+function directRakutenStoreUrl(query) {
+  const slug = RAKUTEN_STORE_SLUGS.get(normalizeMerchantKey(query));
+  return slug ? `https://www.rakuten.com/shop/${slug}` : null;
+}
+
+function merchantDomainCandidate(query) {
+  const cleaned = String(query || "").trim().toLowerCase();
+  if (/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(cleaned)) return cleaned;
+  return `${normalizeMerchantKey(query)}.com`;
+}
+
+function normalizeMerchantKey(query) {
+  return String(query || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’‘`´]/g, "'")
+    .replace(/^www\./, "")
+    .replace(/[^a-z0-9.']+/g, "")
+    .replace(/\.com$/, "");
 }

@@ -4,6 +4,7 @@ import { mkdtempSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { askWithRecommendations, formatSearchWithRecommendations, loadCardBenefits } from "../src/benefits.mjs";
+import { askCCM, routeAskCCM } from "../src/ask-ccm.mjs";
 import { migrate, openDb, upsertOffer } from "../src/db.mjs";
 import { addManualOfferFromText, parseManualOfferText } from "../src/manual-offers.mjs";
 import { buildPortalChecks, formatPortalCheck } from "../src/portals.mjs";
@@ -55,6 +56,36 @@ test("public advisor auto-matches output language", async () => {
   });
 });
 
+test("general ask router detects module intent before checkout fallback", async () => {
+  const db = setupPublicDb();
+
+  await withPublicDistribution(async () => {
+    assert.equal(routeAskCCM("有没有快过期的offer").type, "expiring");
+    assert.equal(routeAskCCM("check rakuten macy's").type, "portal");
+    assert.equal(routeAskCCM("show wallet strategy").type, "wallet");
+    assert.equal(routeAskCCM("where should I use for dinner").type, "checkout");
+
+    const expiring = await askCCM(db, "有没有快过期的offer");
+    assert.match(expiring.output, /^CCM: 未来 14 天快过期的 offer/);
+
+    const portal = await askCCM(db, "check rakuten macy's");
+    assert.match(portal.output, /Shopping portal check/);
+    assert.match(portal.output, /https:\/\/www\.rakuten\.com\/shop\/macys/);
+  });
+});
+
+test("fallback intent recognizes common English dining moments", async () => {
+  const db = setupPublicDb();
+
+  await withPublicDistribution(async () => {
+    const result = await askWithRecommendations(db, "where should I use for dinner", { disableLlm: true });
+
+    assert.equal(result.intent.category, "dining");
+    assert.equal(result.decision.type, "base_card");
+    assert.match(result.decision.summary, /restaurants|dining/i);
+  });
+});
+
 test("public advisor selects merchant offer over fallback card", async () => {
   const db = setupPublicDb();
   upsertOffer(db, offer({
@@ -72,7 +103,71 @@ test("public advisor selects merchant offer over fallback card", async () => {
     assert.match(result.decision.summary, /Macy's/);
     assert.match(output, /Use:\nAmex - Macy's: Spend \$50 or more, earn \$10 back/);
     assert.match(output, /Before paying:/);
-    assert.match(output, /Check Rakuten cash back: https:\/\/www\.rakuten\.com\/stores\/all\?query=Macy's/);
+    assert.match(output, /Check Rakuten cash back: https:\/\/www\.rakuten\.com\/shop\/macys/);
+  });
+});
+
+test("public advisor infers merchant intent from matching offer results", async () => {
+  const db = setupPublicDb();
+  upsertOffer(db, offer({
+    merchant: "Acme Wireless",
+    category: "general_shopping",
+    rewardType: "percent",
+    rewardValue: 25,
+    rewardText: "25% cash back",
+    rawHash: "public-acme-wireless-offer-inferred",
+  }));
+
+  await withPublicDistribution(async () => {
+    const result = await askWithRecommendations(db, "acme", { disableLlm: true });
+    const output = formatSearchWithRecommendations(result);
+
+    assert.equal(result.intent.merchant, "Acme Wireless");
+    assert.equal(result.intent.inferredFromOffers, true);
+    assert.equal(result.decision.type, "offer");
+    assert.match(output, /Use:\nAmex - Acme Wireless: 25% cash back/);
+  });
+});
+
+test("public advisor skips matching offer when purchase amount is below minimum spend", async () => {
+  const db = setupPublicDb();
+  upsertOffer(db, offer({
+    merchant: "Macy's",
+    category: "department_store",
+    rewardText: "Spend $100 or more, earn $20 back",
+    minSpend: 100,
+    maxReward: 20,
+    rawHash: "public-amex-macys-min-spend",
+  }));
+
+  await withPublicDistribution(async () => {
+    const result = await askWithRecommendations(db, "macy's $30", { disableLlm: true });
+    const output = formatSearchWithRecommendations(result);
+
+    assert.equal(result.offers.length, 1);
+    assert.equal(result.decision.type, "base_card");
+    assert.match(result.decision.reason, /does not meet this purchase amount/);
+    assert.match(output, /Use:\nAmex Blue Business Plus Card/);
+    assert.doesNotMatch(output, /Activate Amex offer: Macy's/);
+  });
+});
+
+test("public advisor keeps matching offer eligible when purchase amount reaches minimum spend", async () => {
+  const db = setupPublicDb();
+  upsertOffer(db, offer({
+    merchant: "Macy's",
+    category: "department_store",
+    rewardText: "Spend $100 or more, earn $20 back",
+    minSpend: 100,
+    maxReward: 20,
+    rawHash: "public-amex-macys-min-spend-met",
+  }));
+
+  await withPublicDistribution(async () => {
+    const result = await askWithRecommendations(db, "macy's $120", { disableLlm: true });
+
+    assert.equal(result.decision.type, "offer");
+    assert.match(result.decision.summary, /Spend \$100 or more/);
   });
 });
 
@@ -200,8 +295,20 @@ test("rakuten portal checks are suggested for shopping merchants and skipped for
   const merchantChecks = buildPortalChecks({ merchant: "Macy's", category: "department_store" });
   assert.equal(merchantChecks.length, 1);
   assert.equal(merchantChecks[0].provider, "Rakuten");
-  assert.equal(merchantChecks[0].url, "https://www.rakuten.com/stores/all?query=Macy's");
+  assert.equal(merchantChecks[0].url, "https://www.rakuten.com/shop/macys");
   assert.match(formatPortalCheck(merchantChecks[0], "zh"), /检查 Rakuten 返现入口/);
+
+  const nikeChecks = buildPortalChecks({ merchant: "Nike", category: "clothing" });
+  assert.equal(nikeChecks[0].url, "https://www.rakuten.com/shop/nike");
+
+  const lululemonChecks = buildPortalChecks({ merchant: "lululemom", category: "clothing" });
+  assert.equal(lululemonChecks[0].url, "https://www.rakuten.com/shop/lululemon");
+
+  const visibleChecks = buildPortalChecks({ merchant: "Visible by Verizon", category: "general_shopping" });
+  assert.equal(visibleChecks[0].url, "https://www.rakuten.com/shop/visible");
+
+  const categoryChecks = buildPortalChecks({ category: "general_shopping", rawQuery: "shopping" });
+  assert.equal(categoryChecks[0].url, "https://www.rakuten.com/");
 
   const diningChecks = buildPortalChecks({ category: "dining", rawQuery: "今晚吃饭" });
   assert.equal(diningChecks.length, 0);

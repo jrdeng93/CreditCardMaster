@@ -1,6 +1,7 @@
 import { loadEnv } from "./config.mjs";
 import { getStatus, migrate, openDb } from "./db.mjs";
 import { askWithRecommendations, formatSearchWithRecommendations } from "./benefits.mjs";
+import { askCCM } from "./ask-ccm.mjs";
 import { expiringOffers, formatOffers, searchOffers } from "./search.mjs";
 import { addManualOffer, addManualOfferFromText, formatManualOfferResult } from "./manual-offers.mjs";
 import {
@@ -34,7 +35,8 @@ if (command === "search") {
   console.log(formatOffers(searchOffers(db, query), { query }));
 } else if (command === "ask") {
   const query = args.join(" ");
-  console.log(formatSearchWithRecommendations(await askWithRecommendations(db, query)));
+  const answer = await askCCM(db, query);
+  console.log(answer.output);
 } else if (command === "bestcard") {
   const query = args.join(" ");
   console.log(formatSearchWithRecommendations(await askWithRecommendations(db, query), { showOffers: false }));

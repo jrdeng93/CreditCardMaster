@@ -120,8 +120,8 @@ export function formatOffers(rows, options = {}) {
     .map((row) => {
       const card = row.card_last4 ? `${row.card_name || row.issuer} ****${row.card_last4}` : row.card_name || row.issuer;
       const flags = [
-        row.activated ? "activated" : row.activation_required ? "needs activation" : null,
-        row.expires_on ? `expires ${row.expires_on}` : null,
+        row.activated ? t(lang, "activated") : row.activation_required ? t(lang, "needsActivation") : null,
+        row.expires_on ? `${t(lang, "expiresShort")} ${row.expires_on}` : null,
       ].filter(Boolean);
 
       return [

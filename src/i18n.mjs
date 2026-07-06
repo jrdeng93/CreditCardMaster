@@ -17,6 +17,8 @@ const LABELS = {
     noCardMatch: "No card-level match. Prefer an active offer above, then your best everyday card.",
     noCardBenefitMatch: "No card-level benefit match found. Use the best offer above, or default to a flexible everyday/travel card.",
     activate: "activate",
+    activated: "activated",
+    needsActivation: "needs activation",
     activateOffer: "Activate",
     expiresShort: "exp",
     verified: "verified",
@@ -28,6 +30,8 @@ const LABELS = {
     walletStrategy: "Wallet strategy",
     watchlistMatch: "Watchlist match",
     bestAvailable: "Best available match from active offers and base-card rules.",
+    ccmRoute: "CCM",
+    noPortalCheck: "No shopping portal check for this query.",
   },
   zh: {
     recognized: "识别",
@@ -45,6 +49,8 @@ const LABELS = {
     noCardMatch: "没有匹配到卡片基础福利。优先使用上面的有效 offer，否则用日常默认卡。",
     noCardBenefitMatch: "没有匹配到卡片基础福利。优先使用上面的有效 offer，或者使用日常默认卡。",
     activate: "需激活",
+    activated: "已激活",
+    needsActivation: "需激活",
     activateOffer: "激活",
     expiresShort: "到期",
     verified: "已核实",
@@ -56,6 +62,8 @@ const LABELS = {
     walletStrategy: "钱包策略",
     watchlistMatch: "关注列表匹配",
     bestAvailable: "根据有效 offer 和卡片基础福利选择的最佳匹配。",
+    ccmRoute: "CCM",
+    noPortalCheck: "这个问题没有购物返现入口建议。",
   },
 };
 

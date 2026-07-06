@@ -3,7 +3,7 @@
     {
       "id": "dining",
       "label": "Dining",
-      "aliases": ["restaurant", "restaurants", "dining", "meal", "takeout", "delivery", "coffee", "餐厅", "吃饭", "饭店", "外卖", "咖啡"]
+      "aliases": ["restaurant", "restaurants", "dining", "meal", "dinner", "lunch", "brunch", "supper", "takeout", "delivery", "coffee", "餐厅", "吃饭", "饭店", "晚饭", "午饭", "早午餐", "外卖", "咖啡"]
     },
     {
       "id": "grocery",

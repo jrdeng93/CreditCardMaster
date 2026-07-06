@@ -47,6 +47,8 @@ Ask from Discord when you are standing at checkout, ordering food, booking trave
 | 🔁 Offer import | [docs/modules/offer-refresh.md](docs/modules/offer-refresh.md) |
 | 🧰 Custom importer template | [docs/modules/custom-importer-template.md](docs/modules/custom-importer-template.md) |
 | 💳 Card benefits | [docs/modules/card-benefits.md](docs/modules/card-benefits.md) |
+| 🔎 Local RAG retrieval | [docs/modules/rag.md](docs/modules/rag.md) - Python LangChain + FAISS + Ollama embeddings |
+| 🐍 Python runtime | [docs/modules/python-runtime.md](docs/modules/python-runtime.md) |
 | 🛍️ Shopping portals | [docs/modules/shopping-portals.md](docs/modules/shopping-portals.md) |
 | 🎯 Manual offers | [docs/modules/manual-offers.md](docs/modules/manual-offers.md) |
 | 📰 Credit card news | [docs/modules/doctor-of-credit-monitor.md](docs/modules/doctor-of-credit-monitor.md) |

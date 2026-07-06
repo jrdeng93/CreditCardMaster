@@ -64,7 +64,7 @@ for (const path of BLOCKED_SOURCE_FILES) {
 }
 
 const gitignore = readFileSync(join(ROOT, ".gitignore"), "utf8");
-for (const pattern of ["node_modules/", "data/*.sqlite", "data/card-benefits.json", "state/", "launchd/", ".agents/", ".codex/", ".env"]) {
+for (const pattern of ["node_modules/", ".venv-rag/", "data/*.sqlite", "data/card-benefits.json", "state/", "launchd/", ".agents/", ".codex/", ".env"]) {
   if (!gitignore.includes(pattern)) failures.push(`.gitignore must include ${pattern}`);
 }
 
@@ -112,7 +112,7 @@ function listPublicTextFiles(dir) {
 
   function walk(current) {
     for (const name of readdirSync(current)) {
-      if ([".git", "node_modules", "state", "launchd"].includes(name)) continue;
+      if ([".git", "node_modules", ".venv-rag", "__pycache__", "state", "launchd"].includes(name)) continue;
       const path = join(current, name);
       const rel = relative(ROOT, path);
       const stats = statSync(path);
@@ -121,7 +121,7 @@ function listPublicTextFiles(dir) {
         walk(path);
         continue;
       }
-      if (isPublicDataFile(rel) || /\.(mjs|js|json|md|svg|ya?ml|example|gitignore)$/.test(name) || [".env.example", ".gitignore"].includes(rel)) {
+      if (isPublicDataFile(rel) || /\.(mjs|js|py|json|md|svg|ya?ml|example|gitignore)$/.test(name) || [".env.example", ".gitignore"].includes(rel)) {
         entries.push(rel);
       }
     }

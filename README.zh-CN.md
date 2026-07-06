@@ -47,6 +47,8 @@ CreditCardMaster 是一个本地优先的信用卡付款决策助手。
 | 🔁 Offer 导入 | [docs/modules/offer-refresh.md](docs/modules/offer-refresh.md) |
 | 🧰 自定义导入模板 | [docs/modules/custom-importer-template.md](docs/modules/custom-importer-template.md) |
 | 💳 信用卡权益 | [docs/modules/card-benefits.md](docs/modules/card-benefits.md) |
+| 🔎 本地 RAG 检索 | [docs/modules/rag.md](docs/modules/rag.md) - Python LangChain + FAISS + Ollama embeddings |
+| 🐍 Python 运行时 | [docs/modules/python-runtime.md](docs/modules/python-runtime.md) |
 | 🛍️ 购物返现入口 | [docs/modules/shopping-portals.md](docs/modules/shopping-portals.md) |
 | 🎯 手动 Offers | [docs/modules/manual-offers.md](docs/modules/manual-offers.md) |
 | 📰 信用卡新闻 | [docs/modules/doctor-of-credit-monitor.md](docs/modules/doctor-of-credit-monitor.md) |

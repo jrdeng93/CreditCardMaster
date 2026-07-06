@@ -36,6 +36,21 @@
       "aliases": ["ray-ban", "rayban", "ray ban"]
     },
     {
+      "canonical": "Nike",
+      "category": "clothing",
+      "aliases": ["nike", "nike.com"]
+    },
+    {
+      "canonical": "lululemon",
+      "category": "clothing",
+      "aliases": ["lululemon", "lululemon.com", "lululemom", "lulu lemon"]
+    },
+    {
+      "canonical": "Visible by Verizon",
+      "category": "general_shopping",
+      "aliases": ["visible", "visible.com", "visible by verizon", "visible wireless"]
+    },
+    {
       "canonical": "Walmart",
       "category": "general_shopping",
       "aliases": ["walmart"]

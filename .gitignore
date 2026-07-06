@@ -1,4 +1,6 @@
 node_modules/
+.venv-rag/
+__pycache__/
 state/
 .env
 .env.*
